@@ -1,3 +1,4 @@
+"Testing CI/CD"
 """Main FastAPI application for MediBook."""
 
 from __future__ import annotations
