@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediBook | Book Appointment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500&family=Space+Grotesk:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="brand">MediBook</div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="doctor.html">Book</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="login.html">Login</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <h2>Select a doctor</h2>
+        <p>Choose a doctor and pick an available time slot.</p>
+        <select id="doctorSelect"></select>
+        <div id="bookingStatus" class="alert">Choose a doctor to load slots.</div>
+        <div id="selectedSlot" class="alert" style="margin-top: 12px">
+          No slot selected
+        </div>
+      </div>
+      <div class="hero-card">
+        <h2>Available slots</h2>
+        <ul id="availabilityList"></ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="hero-card">
+        <h2>Book appointment</h2>
+        <form id="bookingForm">
+          <textarea name="reason" placeholder="Reason for visit"></textarea>
+          <button type="submit">Book appointment</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h3>Before your visit</h3>
+        <p>Arrive 10 minutes early and bring your ID and insurance card.</p>
+      </div>
+      <div class="card">
+        <h3>Cancellation policy</h3>
+        <p>Cancel at least 24 hours ahead when possible to free the slot.</p>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="hero-card">
+        <h3>How booking works</h3>
+        <ol>
+          <li>Select a doctor and available slot.</li>
+          <li>Share the reason for your visit.</li>
+          <li>Receive a confirmation by email.</li>
+        </ol>
+      </div>
+      <div class="hero-card">
+        <h3>Need to reschedule?</h3>
+        <p>Visit your dashboard to move or cancel appointments anytime.</p>
+        <a class="btn" href="dashboard.html">Go to dashboard</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h3>Contact the clinic</h3>
+        <p>If you experience urgent symptoms, contact emergency services.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <h3>FAQs</h3>
+        <ul>
+          <li>Slots refresh every hour.</li>
+          <li>All times are shown in your local timezone.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Appointments are confirmed instantly with email notifications.</p>
+    </footer>
+
+    <script type="module" src="./js/booking.js"></script>
+  </body>
+</html>

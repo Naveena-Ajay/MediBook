@@ -1,0 +1,101 @@
+# MediBook backend dependencies
+# Keep versions pinned for repeatable installs
+#
+# Core runtime
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+#
+# Database
+SQLAlchemy==2.0.29
+#
+# Auth and security
+python-jose==3.3.0
+passlib[bcrypt]==1.7.4
+#
+# Validation and typing
+pydantic==1.10.13
+email-validator==2.1.1
+#
+# HTTP and networking (used by uvicorn extras)
+httptools==0.6.1
+uvloop==0.19.0
+watchfiles==0.21.0
+websockets==12.0
+#
+# Standard utilities
+python-dateutil==2.9.0.post0
+#
+# Notes
+# The following lines are informational and kept to make this file
+# self-documenting for a new developer.
+#
+# fastapi: web framework for APIs
+# uvicorn: ASGI server
+# SQLAlchemy: ORM for SQLite
+# python-jose: JWT signing/verification
+# passlib[bcrypt]: password hashing
+# pydantic: request/response validation
+# email-validator: robust email parsing
+#
+# Additional production hardening
+# Consider adding logging config in main.py if needed.
+#
+# -----------
+# Dependency rationale
+# -----------
+# FastAPI relies on Starlette under the hood.
+# Uvicorn standard extras include uvloop and httptools.
+# SQLAlchemy 2.x is used with the 2.0-style ORM.
+# JWTs are signed using HS256 in this template.
+# Password hashing uses bcrypt for compatibility.
+#
+# -----------
+# Local development
+# -----------
+# Use a virtual environment and install with:
+# pip install -r requirements.txt
+#
+# -----------
+# Compatibility
+# -----------
+# Python 3.10+ recommended.
+# SQLite ships with Python on most platforms.
+#
+# -----------
+# Optional additions
+# -----------
+# alembic can be used for database migrations
+# gunicorn can be used for production process management
+#
+# -----------
+# Security notes
+# -----------
+# Rotate SECRET_KEY in backend/utils/auth.py before deployment.
+# Do not commit real SMTP credentials.
+#
+# -----------
+# Performance notes
+# -----------
+# uvloop is enabled via uvicorn[standard].
+# SQLite is sufficient for local usage; upgrade to Postgres for scale.
+#
+# -----------
+# Testing notes
+# -----------
+# pytest can be added for automated tests.
+# httpx can be added for API testing.
+#
+# -----------
+# Logging notes
+# -----------
+# structlog can be added for structured logging.
+#
+# -----------
+# Deployment notes
+# -----------
+# Use a process manager for production workloads.
+# Configure CORS to a known frontend origin in production.
+#
+# -----------
+# End of file
+# -----------

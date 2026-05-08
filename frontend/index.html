@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediBook | Hospital Appointment Booking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500&family=Space+Grotesk:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="brand">MediBook</div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="doctor.html">Book</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="login.html">Login</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <span class="tag">Trusted Hospital Network</span>
+        <h1>Book care in minutes, not days.</h1>
+        <p>
+          MediBook connects patients with doctors across specializations, offering
+          real-time availability and appointment confirmation.
+        </p>
+        <a class="btn" href="doctor.html">Find a Doctor</a>
+      </div>
+      <div class="hero-card">
+        <h2>Search specialists</h2>
+        <p>Type a specialization to find a matching doctor.</p>
+        <form id="searchForm">
+          <input
+            type="text"
+            id="specializationInput"
+            placeholder="Cardiology, Pediatrics, Dermatology"
+          />
+          <button type="submit">Search</button>
+        </form>
+        <div id="searchStatus" class="alert" style="display: none"></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Featured doctors</h2>
+      <div class="card-grid" id="doctorGrid">
+        <!-- Doctors loaded via JS -->
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="hero-card">
+        <h2>For patients</h2>
+        <p>
+          View upcoming appointments, reschedule instantly, and access
+          prescriptions in one place.
+        </p>
+        <a class="btn" href="dashboard.html">Go to Dashboard</a>
+      </div>
+      <div class="hero-card">
+        <h2>For doctors</h2>
+        <p>
+          Manage your day, track appointments, and issue prescriptions from a
+          secure portal.
+        </p>
+        <a class="btn" href="admin.html">Doctor Portal</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>2026 MediBook. Built for modern hospitals.</p>
+    </footer>
+
+    <script type="module">
+      import { listDoctors } from "./js/api.js";
+
+      const grid = document.getElementById("doctorGrid");
+      const searchForm = document.getElementById("searchForm");
+      const searchInput = document.getElementById("specializationInput");
+      const searchStatus = document.getElementById("searchStatus");
+
+      function showStatus(text) {
+        if (!searchStatus) return;
+        searchStatus.style.display = "block";
+        searchStatus.textContent = text;
+      }
+
+      function renderDoctorCard(doc) {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <h3>${doc.full_name}</h3>
+          <p>${doc.specialization || "General"}</p>
+          <p>${doc.bio || "Experienced clinician in the network."}</p>
+          <a class="btn" href="doctor.html">Book with this doctor</a>
+        `;
+        return card;
+      }
+
+      async function loadDoctors(filter = "") {
+        try {
+          const doctors = await listDoctors(filter);
+          grid.innerHTML = "";
+          doctors.forEach((doc) => grid.appendChild(renderDoctorCard(doc)));
+          if (doctors.length === 0) {
+            showStatus("No doctors match that specialization.");
+          } else {
+            showStatus("Showing available doctors.");
+          }
+        } catch (err) {
+          showStatus(err.message || "Unable to load doctors");
+        }
+      }
+
+      searchForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        loadDoctors(searchInput.value.trim());
+      });
+
+      loadDoctors();
+    </script>
+  </body>
+</html>

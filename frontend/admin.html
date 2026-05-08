@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediBook | Doctor Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500&family=Space+Grotesk:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="brand">MediBook</div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="doctor.html">Book</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="login.html">Login</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <h2>Doctor schedule</h2>
+        <p>Review today and upcoming appointments.</p>
+        <div id="doctorStatus" class="alert">Loading appointments...</div>
+      </div>
+      <div class="hero-card">
+        <h2>Quick actions</h2>
+        <p>Use the form to attach prescriptions to completed visits.</p>
+        <a class="btn" href="doctor.html">View availability</a>
+      </div>
+    </section>
+
+    <section>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Scheduled</th>
+            <th>Status</th>
+            <th>Patient ID</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="doctorAppointments"></tbody>
+      </table>
+    </section>
+
+    <section>
+      <div class="hero-card">
+        <h2>Create prescription</h2>
+        <form id="prescriptionForm">
+          <input type="number" name="appointment_id" placeholder="Appointment ID" required />
+          <input type="text" name="medication" placeholder="Medication" required />
+          <input type="text" name="dosage" placeholder="Dosage" required />
+          <textarea name="instructions" placeholder="Instructions" required></textarea>
+          <button type="submit">Save prescription</button>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Only doctors can access this portal.</p>
+    </footer>
+
+    <script type="module">
+      import { getMe, listAppointments, createPrescription } from "./js/api.js";
+
+      const statusBox = document.getElementById("doctorStatus");
+      const tableBody = document.getElementById("doctorAppointments");
+      const form = document.getElementById("prescriptionForm");
+
+      function showStatus(text, type = "alert") {
+        statusBox.textContent = text;
+        statusBox.className = type;
+      }
+
+      function renderRow(appt) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${appt.id}</td>
+          <td>${new Date(appt.scheduled_at).toLocaleString()}</td>
+          <td><span class="badge">${appt.status}</span></td>
+          <td>${appt.patient_id}</td>
+          <td>Use ID in prescription form</td>
+        `;
+        return row;
+      }
+
+      async function loadDoctorView() {
+        try {
+          const user = await getMe();
+          if (user.role !== "doctor") {
+            window.location.href = "dashboard.html";
+            return;
+          }
+          const items = await listAppointments();
+          tableBody.innerHTML = "";
+          items.forEach((appt) => tableBody.appendChild(renderRow(appt)));
+          showStatus("Appointments loaded.", "success");
+        } catch (err) {
+          window.location.href = "login.html";
+        }
+      }
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const payload = {
+          appointment_id: parseInt(form.appointment_id.value, 10),
+          medication: form.medication.value.trim(),
+          dosage: form.dosage.value.trim(),
+          instructions: form.instructions.value.trim(),
+        };
+        showStatus("Saving prescription...");
+        try {
+          await createPrescription(payload);
+          showStatus("Prescription saved.", "success");
+          form.reset();
+        } catch (err) {
+          showStatus(err.message || "Failed to save prescription");
+        }
+      });
+
+      loadDoctorView();
+    </script>
+  </body>
+</html>

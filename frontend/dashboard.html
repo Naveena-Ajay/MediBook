@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MediBook | Patient Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500&family=Space+Grotesk:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+        <div class="brand">MediBook</div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="doctor.html">Book</a>
+          <a href="dashboard.html">Dashboard</a>
+          <a href="login.html">Login</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-card">
+        <h2>Welcome, <span id="userName">Patient</span></h2>
+        <p>
+          View upcoming appointments, manage changes, and keep your healthcare on track.
+        </p>
+        <a class="btn" href="doctor.html">Book a new appointment</a>
+      </div>
+      <div class="hero-card">
+        <h3>Quick tips</h3>
+        <ul>
+          <li>Use reschedule to move an appointment.</li>
+          <li>Cancel with a reason to notify the clinic.</li>
+          <li>Prescriptions appear in your doctor portal.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h3>Prepare for visits</h3>
+        <p>Bring a list of medications and recent test results.</p>
+      </div>
+      <div class="card">
+        <h3>Need follow-up?</h3>
+        <p>Book another slot from the booking page in just a few clicks.</p>
+      </div>
+    </section>
+
+    <section>
+      <div id="statusBox" class="alert">Loading your appointments...</div>
+      <div id="emptyState" class="alert" style="display: none">
+        No upcoming appointments. Book your first visit today.
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Date & Time</th>
+            <th>Status</th>
+            <th>Doctor ID</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="appointmentsTable"></tbody>
+      </table>
+    </section>
+
+    <section class="grid-2">
+      <div class="card">
+        <h3>Prescription access</h3>
+        <p>Your doctor will add prescriptions after the appointment.</p>
+      </div>
+      <div class="card">
+        <h3>Need help?</h3>
+        <p>Reach out to your clinic for urgent changes or questions.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="alert">
+        Tip: Set a calendar reminder 24 hours before your appointment.
+      </div>
+      <div class="alert success">Stay hydrated and rest well before your visit.</div>
+    </section>
+
+    <footer class="footer">
+      <p>Need assistance? Contact the MediBook help desk.</p>
+    </footer>
+
+    <script type="module" src="./js/dashboard.js"></script>
+  </body>
+</html>
